@@ -1,0 +1,20 @@
+.blur {
+  a[href] {
+    img {
+      transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
+      filter: blur(10px) !important;
+    }
+    img:hover {
+      transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
+      filter: none !important;
+    }
+  }
+  video {
+    transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
+    filter: blur(10px) !important;
+  }
+  video:hover {
+    transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
+    filter: none !important;
+  }
+}
