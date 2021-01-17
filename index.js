@@ -20,6 +20,7 @@ module.exports = class BlurNSFW extends Plugin {
   }
 
   async pluginWillUnload() {
+    powercord.api.settings.unregisterSettings(this.entityID);
     uninject('pog-blurnsfw')
   }
 
@@ -35,16 +36,25 @@ module.exports = class BlurNSFW extends Plugin {
     inject('pog-blurnsfw', Channel.constructor.prototype, 'render', (_, res) => {
       const dm = this.settings.get('blurInDm', false);
       const group = this.settings.get('blurInGroup', false);
+      const blur = this.settings.get('blurEffect', 10)
+      const timing = this.settings.get('blurTiming', 1)
+      console.log(timing)
       if (dm === true && res.props.channel.type === 1) {
         var element = document.getElementsByClassName('scrollerInner-2YIMLh');
+        element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
+        element.item(0).style.setProperty('--blur-timing', `${timing}s`)
         element.item(0).classList.toggle('blur', true);
       }
       if (group === true && res.props.channel.type === 3) {
         var element = document.getElementsByClassName('scrollerInner-2YIMLh');
+        element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
+        element.item(0).style.setProperty('--blur-timing', `${timing}s`)
         element.item(0).classList.toggle('blur', true);
       }
       if (res.props.channel.nsfw && res.props.channel.type === 0) {
         var element = document.getElementsByClassName('scrollerInner-2YIMLh');
+        element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
+        element.item(0).style.setProperty('--blur-timing', `${timing}s`)
         element.item(0).classList.toggle('blur', true);
       }
 

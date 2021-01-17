@@ -1,20 +1,25 @@
+:root {
+  --blur-effect: blur(1px);
+  --blur-timing: 1s;
+}
+
 .blur {
   a[href] {
     img {
-      transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
-      filter: blur(10px) !important;
+      transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
+      filter: var(--blur-effect) !important;
     }
     img:hover {
-      transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
+      transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
       filter: none !important;
     }
   }
   video {
-    transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
-    filter: blur(10px) !important;
+    transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
+    filter: var(--blur-effect) !important;
   }
   video:hover {
-    transition: 1s cubic-bezier(.2, .11, 0, 1) !important;
+    transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
     filter: none !important;
   }
 }
