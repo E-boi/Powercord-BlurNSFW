@@ -38,7 +38,6 @@ module.exports = class BlurNSFW extends Plugin {
       const group = this.settings.get('blurInGroup', false);
       const blur = this.settings.get('blurEffect', 10)
       const timing = this.settings.get('blurTiming', 1)
-      console.log(timing)
       if (dm === true && res.props.channel.type === 1) {
         var element = document.getElementsByClassName('scrollerInner-2YIMLh');
         element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
