@@ -19,7 +19,7 @@ module.exports = class BlurNSFW extends Plugin {
     this.getChannel();
   }
 
-  async pluginWillUnload() {
+  pluginWillUnload() {
     powercord.api.settings.unregisterSettings(this.entityID);
     uninject('pog-blurnsfw')
   }
@@ -31,31 +31,27 @@ module.exports = class BlurNSFW extends Plugin {
     this.blurImages(chat);
   }
 
+  blurChannel() {
+    const blur = this.settings.get('blurEffect', 10);
+    const timing = this.settings.get('blurTiming', 1);
+    var element = document.getElementsByClassName('scrollerInner-2YIMLh');
+    element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
+    element.item(0).style.setProperty('--blur-timing', `${timing}s`)
+    element.item(0).classList.toggle('blur', true);
+  }
+
   async blurImages(chat) {
     const Channel = getOwnerInstance(chat);
     inject('pog-blurnsfw', Channel.constructor.prototype, 'render', (_, res) => {
       const dm = this.settings.get('blurInDm', false);
       const group = this.settings.get('blurInGroup', false);
-      const blur = this.settings.get('blurEffect', 10)
-      const timing = this.settings.get('blurTiming', 1)
-      if (dm === true && res.props.channel.type === 1) {
-        var element = document.getElementsByClassName('scrollerInner-2YIMLh');
-        element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
-        element.item(0).style.setProperty('--blur-timing', `${timing}s`)
-        element.item(0).classList.toggle('blur', true);
-      }
-      if (group === true && res.props.channel.type === 3) {
-        var element = document.getElementsByClassName('scrollerInner-2YIMLh');
-        element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
-        element.item(0).style.setProperty('--blur-timing', `${timing}s`)
-        element.item(0).classList.toggle('blur', true);
-      }
-      if (res.props.channel.nsfw && res.props.channel.type === 0) {
-        var element = document.getElementsByClassName('scrollerInner-2YIMLh');
-        element.item(0).style.setProperty('--blur-effect', `blur(${blur}px)`);
-        element.item(0).style.setProperty('--blur-timing', `${timing}s`)
-        element.item(0).classList.toggle('blur', true);
-      }
+      const Blockedchannels = this.settings.get('Blocked'), blurChannels = this.settings.get('Blur')
+      const channel = Blockedchannels !== undefined ? Blockedchannels.filter((obj, idx) => obj.id === res.props.channel.id || obj.id === res.props.channel.recipients[0]) : ''
+      const Channel = blurChannels !== undefined ? blurChannels.filter((obj, idx) => obj.id === res.props.channel.id || obj.id === res.props.channel.recipients[0]) : ''
+      if (channel.length !== 0) return res;
+      else if (Channel.length !== 0) this.blurChannel()
+      else if (dm && res.props.channel.type === 1 || group && res.props.channel.type === 3) this.blurChannel()
+      else if (res.props.channel.nsfw && res.props.channel.type === 0) this.blurChannel()
 
       return res;
     });
