@@ -4,22 +4,15 @@
 }
 
 .blur {
-  a[href] {
-    img {
-      transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
+  .embedWrapper-lXpS3L img,
+  .embedWrapper-lXpS3L video {
+      transition: var(--blur-timing) !important;
       filter: var(--blur-effect) !important;
-    }
-    img:hover {
-      transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
-      filter: none !important;
-    }
   }
-  video {
-    transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
-    filter: var(--blur-effect) !important;
-  }
-  video:hover {
-    transition: var(--blur-timing) cubic-bezier(.2, .11, 0, 1) !important;
+  .embedWrapper-lXpS3L img:hover,
+  .embedWrapper-lXpS3L video:hover
+  {
+    transition: var(--blur-timing) !important;
     filter: none !important;
   }
 }
