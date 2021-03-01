@@ -35,7 +35,7 @@ module.exports = class BlurNSFW extends Plugin {
   async injectBlur() {
     const channelTextArea = await getModule(m => m.type && m.type.render && m.type.render.displayName === "ChannelTextAreaContainer", false);
     inject('pog-blurnsfw', channelTextArea.type, 'render', (_, res) => {
-      const channel = res.props.children.props.children[4].props.channel;
+      const channel = res.props.children[0].props.children[4].props.channel;
       const blockedChannels = this.settings.get('Blocked') !== undefined ? this.settings.get('Blocked').filter((obj, idx) => obj.id === channel.id || obj.id === channel.recipients[0]) : '';
       const blurChannels = this.settings.get('Blur') !== undefined ? this.settings.get('Blur').filter((obj, idx) => obj.id === channel.id || obj.id === channel.recipients[0]) : '';
       if (blockedChannels.length !== 0) return res;
