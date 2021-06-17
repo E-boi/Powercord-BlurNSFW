@@ -5,7 +5,7 @@ const settings = require('./Components/Settings');
 
 module.exports = class BlurNSFW extends Plugin {
 	startPlugin() {
-		this.loadStylesheet('style.scss');
+		this.loadStylesheet('style.css');
 		powercord.api.settings.registerSettings(this.entityID, {
 			category: this.entityID,
 			label: 'Blur NSFW',
@@ -35,9 +35,13 @@ module.exports = class BlurNSFW extends Plugin {
 		inject('pog-blurnsfw', channelTextArea.type, 'render', (args, res) => {
 			const channel = args[0].channel;
 			const blockedChannels =
-				this.settings.get('Blocked') !== undefined ? this.settings.get('Blocked').filter((obj, idx) => obj.id === channel.id || obj.id === channel.recipients[0]) : '';
+				this.settings.get('Blocked') !== undefined
+					? this.settings.get('Blocked').filter((obj, idx) => obj.id === channel.id || obj.id === channel.recipients[0])
+					: '';
 			const blurChannels =
-				this.settings.get('Blur') !== undefined ? this.settings.get('Blur').filter((obj, idx) => obj.id === channel.id || obj.id === channel.recipients[0]) : '';
+				this.settings.get('Blur') !== undefined
+					? this.settings.get('Blur').filter((obj, idx) => obj.id === channel.id || obj.id === channel.recipients[0])
+					: '';
 			if (blockedChannels.length !== 0) return res;
 			else if (blurChannels.length !== 0) this.blurChannel();
 			else if ((this.settings.get('blurInDm') && channel.type === 1) || (this.settings.get('blurInGroup') && channel.type === 3)) this.blurChannel();

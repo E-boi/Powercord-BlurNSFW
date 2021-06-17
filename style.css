@@ -1,0 +1,15 @@
+:root {
+	--blur-effect: blur(1px);
+	--blur-timing: 1s;
+}
+
+.blur .embedWrapper-lXpS3L img,
+.blur .embedWrapper-lXpS3L video {
+	transition: var(--blur-timing) !important;
+	filter: var(--blur-effect) !important;
+}
+.blur .embedWrapper-lXpS3L img:hover,
+.blur .embedWrapper-lXpS3L video:hover {
+	transition: var(--blur-timing) !important;
+	filter: none !important;
+}
