@@ -11,7 +11,6 @@ module.exports = class BlurNSFW extends Plugin {
 			label: 'Blur NSFW',
 			render: settings,
 		});
-		this.safeZones = ['DM Channel', 'Guild Channel'];
 		this.injectBlur();
 	}
 
@@ -48,5 +47,6 @@ module.exports = class BlurNSFW extends Plugin {
 			else if (channel.nsfw && channel.type === 0) this.blurChannel();
 			return res;
 		});
+		channelTextArea.type.render.displayName = 'ChannelTextAreaContainer';
 	}
 };
